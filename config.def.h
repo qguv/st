@@ -177,6 +177,7 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ Mod4Mask, 'u', externalpipe, { .v = "xurls | dmenu -l 10 | xargs -r xdg-open" } },
 };
 
 /*
