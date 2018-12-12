@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 2;
+static char font[] = "Inconsolata:pixelsize=18:antialias=true:autohint=true";
+static int borderpx = 30;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -84,31 +84,29 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+  /* 8 normal colors */
+  [0] = "#3d3d3d", /* black   */
+  [1] = "#6673bf", /* red     */
+  [2] = "#3ea290", /* green   */
+  [3] = "#b0ead9", /* yellow  */
+  [4] = "#31658c", /* blue    */
+  [5] = "#596196", /* magenta */
+  [6] = "#8292b2", /* cyan    */
+  [7] = "#909193", /* white   */
 
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+  /* 8 bright colors */
+  [8]  = "#4d4d4d", /* black   */
+  [9]  = "#899aff", /* red     */
+  [10] = "#52ad91", /* green   */
+  [11] = "#98c9bb", /* yellow  */
+  [12] = "#477ab3", /* blue    */
+  [13] = "#7882bf", /* magenta */
+  [14] = "#95a7cc", /* cyan    */
+  [15] = "#ccced0", /* white   */
 
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
+  /* special colors */
+  [256] = "#262626", /* background */
+  [257] = "#ffffff", /* foreground */
 };
 
 
@@ -116,9 +114,9 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 0;
-static unsigned int defaultcs = 256;
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+static unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 257;
 
 /*
@@ -149,6 +147,41 @@ static unsigned int mousebg = 0;
  * doesn't match the ones requested.
  */
 static unsigned int defaultattr = 11;
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+		{ "font",         STRING,  &font },
+		{ "color0",       STRING,  &colorname[0] },
+		{ "color1",       STRING,  &colorname[1] },
+		{ "color2",       STRING,  &colorname[2] },
+		{ "color3",       STRING,  &colorname[3] },
+		{ "color4",       STRING,  &colorname[4] },
+		{ "color5",       STRING,  &colorname[5] },
+		{ "color6",       STRING,  &colorname[6] },
+		{ "color7",       STRING,  &colorname[7] },
+		{ "color8",       STRING,  &colorname[8] },
+		{ "color9",       STRING,  &colorname[9] },
+		{ "color10",      STRING,  &colorname[10] },
+		{ "color11",      STRING,  &colorname[11] },
+		{ "color12",      STRING,  &colorname[12] },
+		{ "color13",      STRING,  &colorname[13] },
+		{ "color14",      STRING,  &colorname[14] },
+		{ "color15",      STRING,  &colorname[15] },
+		{ "background",   STRING,  &colorname[256] },
+		{ "foreground",   STRING,  &colorname[257] },
+		{ "cursorColor",  STRING,  &colorname[258] },
+		{ "termname",     STRING,  &termname },
+		{ "shell",        STRING,  &shell },
+		{ "xfps",         INTEGER, &xfps },
+		{ "actionfps",    INTEGER, &actionfps },
+		{ "blinktimeout", INTEGER, &blinktimeout },
+		{ "bellvolume",   INTEGER, &bellvolume },
+		{ "tabspaces",    INTEGER, &tabspaces },
+		{ "cwscale",      FLOAT,   &cwscale },
+		{ "chscale",      FLOAT,   &chscale },
+};
 
 /*
  * Internal mouse shortcuts.
